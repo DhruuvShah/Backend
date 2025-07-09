@@ -34,7 +34,7 @@ app.delete('/notes/:index',(req,res)=>{
 })
 
 //Update Notes
-app.patch('/notes/:index',(req,res)=>{
+app.patch('/notes/:index',(re q,res)=>{
     const index = req.params.index
     const {title} = req.body
     notes[index].title = title
