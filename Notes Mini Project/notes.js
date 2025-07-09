@@ -25,7 +25,7 @@ app.get('/notes', (req, res) => {
 })
 
 //Delete Notes
-app.delete('/notes/:index',(req,res)=>{
+app.delete('/notes/:index', (req, res) => {
     const index = req.params.index
     delete notes[index]
     res.json({
@@ -34,9 +34,9 @@ app.delete('/notes/:index',(req,res)=>{
 })
 
 //Update Notes
-app.patch('/notes/:index',(re q,res)=>{
+app.patch('/notes/:index', (req, res) => {
     const index = req.params.index
-    const {title} = req.body
+    const { title } = req.body
     notes[index].title = title
     res.json({
         message: "Note Updated Successfully",
