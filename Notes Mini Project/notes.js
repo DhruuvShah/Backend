@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
     res.send('Hello, Dhruv!')
 })
 
-//Create Notes
+//Create Note
 app.post('/notes', (req, res) => {
     console.log(req.body)
     notes.push(req.body)
@@ -19,12 +19,12 @@ app.post('/notes', (req, res) => {
     })
 })
 
-//Shoow All Notes
+//Display All Note
 app.get('/notes', (req, res) => {
     res.json(notes)
 })
 
-//Delete Notes
+//Delete Note
 app.delete('/notes/:index', (req, res) => {
     const index = req.params.index
     delete notes[index]
@@ -33,7 +33,7 @@ app.delete('/notes/:index', (req, res) => {
     })
 })
 
-//Update Notes
+//Update Note
 app.patch('/notes/:index', (req, res) => {
     const index = req.params.index
     const { title } = req.body
