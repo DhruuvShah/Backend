@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import "./FacialExpression.css";
 import * as faceapi from "face-api.js";
 
 export default function FacialExpression() {
@@ -23,6 +24,7 @@ export default function FacialExpression() {
     const detections = await faceapi
       .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
       .withFaceExpressions();
+    console.log(detections);
     let mostProableExpression = 0;
     let _expression = "";
 
@@ -46,12 +48,12 @@ export default function FacialExpression() {
   }, []);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div className="mood-element">
       <video
         ref={videoRef}
         autoPlay
         muted
-        style={{ width: "720px", height: "560px" }}
+        className="user-video-feed"
       />
       <button onClick={detectMood}>Detect Mood</button>
     </div>
