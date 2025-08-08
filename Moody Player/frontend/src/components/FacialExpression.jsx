@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import "./FacialExpression.css";
 import * as faceapi from "face-api.js";
+import "./FacialExpression.css";
+import axios from "axios";
 
-export default function FacialExpression() {
+export default function FacialExpression({ setSongs }) {
   const videoRef = useRef();
 
   const loadModels = async () => {
@@ -24,7 +25,7 @@ export default function FacialExpression() {
     const detections = await faceapi
       .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
       .withFaceExpressions();
-    console.log(detections);
+    // console.log(detections);
     let mostProableExpression = 0;
     let _expression = "";
 
@@ -40,7 +41,12 @@ export default function FacialExpression() {
       }
     }
 
-    console.log(_expression);
+    axios
+      .get(`http://localhost:3000/songs?mood=${_expression}`)
+      .then((response) => {
+        console.log(response.data);
+        setSongs(response.data.songs);
+      });
   }
 
   useEffect(() => {
@@ -49,12 +55,7 @@ export default function FacialExpression() {
 
   return (
     <div className="mood-element">
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        className="user-video-feed"
-      />
+      <video ref={videoRef} autoPlay muted className="user-video-feed" />
       <button onClick={detectMood}>Detect Mood</button>
     </div>
   );

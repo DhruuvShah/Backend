@@ -1,37 +1,47 @@
-import React, { useState } from "react";
 import "./MoodSongs.css";
+import { useState } from "react";
 
-const MoodSongs = () => {
-  const [Songs, setSongs] = useState([
-    {
-      title: "test_title",
-      artist: "test_artist",
-      url: "Test_url_1",
-    },
-    {
-      title: "test_title",
-      artist: "test_artist",
-      url: "Test_url_1",
-    },
-    {
-      title: "test_title",
-      artist: "test_artist",
-      url: "Test_url_1",
-    },
-  ]);
+const MoodSongs = ({ Songs }) => {
+  const [isPlaying, setIsPlaying] = useState(null);
+
+  const handlePlayPause = (index) => {
+    if (isPlaying === index) {
+      setIsPlaying(null);
+    } else {
+      setIsPlaying(index);
+    }
+  };
 
   return (
     <div className="mood-songs">
       <h2>Recommended Songs</h2>
+
       {Songs.map((song, index) => (
         <div className="song" key={index}>
           <div className="title">
             <h3>{song.title}</h3>
             <p>{song.artist}</p>
           </div>
+
           <div className="play-pause-button">
-            <i class="ri-pause-line"></i>
-            <i class="ri-play-circle-fill"></i>
+            {
+              isPlaying === index &&
+              <audio
+                src={song.audio}
+                style={{
+                  display: "none",
+                }}
+                autoPlay={isPlaying === index}
+              ></audio>
+            }
+            
+            <button onClick={() => handlePlayPause(index)}>
+              {isPlaying === index ? (
+                <i className="ri-pause-line"></i>
+              ) : (
+                <i className="ri-play-circle-fill"></i>
+              )}
+            </button>
           </div>
         </div>
       ))}
