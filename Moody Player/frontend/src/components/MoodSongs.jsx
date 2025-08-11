@@ -1,74 +1,118 @@
-import "./MoodSongs.css";
-import { useState, useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { PlayIcon, PauseIcon, MusicIcon } from "./UIGraphics";
+import styles from "./MoodSongs.module.css";
 
-/**
- * Glassy, minimal list with play/pause per row.
- * Keeps your existing API shape: Songs: [{ title, artist, audio/url }]
- * Uses a single <audio> element for better control.
- */
-const MoodSongs = ({ Songs = [] }) => {
-  const [isPlaying, setIsPlaying] = useState(null);
-  const audioRef = useRef(null);
-
-  useEffect(() => {
-    // Stop audio if list changes
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-    setIsPlaying(null);
-  }, [Songs]);
-
-  const handlePlayPause = (index, src) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying === index) {
-      audio.pause();
-      setIsPlaying(null);
-    } else {
-      if (audio.src !== src) audio.src = src;
-      audio.play().catch(() => {});
-      setIsPlaying(index);
-    }
-  };
+const SongCard = ({ song, onToggle, isPlaying }) => {
+  const { title = "Untitled", artist = "Unknown Artist", albumArt } = song;
 
   return (
-    <div className="mood-songs">
-      <h2>Recommended Tracks</h2>
-
-      <div className="songs-list">
-        {Songs.length === 0 && (
-          <div className="empty">No songs yet — detect your mood to begin.</div>
-        )}
-
-        {Songs.map((song, index) => {
-          const src = song.audio || song.url || "";
-          const playing = isPlaying === index;
-
-          return (
-            <div key={index} className="song-row">
-              <div className="meta">
-                <div className="title">{song.title || "Untitled"}</div>
-                <div className="artist">{song.artist || "Unknown Artist"}</div>
-              </div>
-
-              <button
-                className={`pill ${playing ? "pill-active" : ""}`}
-                onClick={() => handlePlayPause(index, src)}
-                aria-label={playing ? "Pause" : "Play"}
-              >
-                {playing ? "Pause" : "Play"}
-              </button>
-            </div>
-          );
-        })}
+    <motion.div
+      className={`${styles.songCard} ${isPlaying ? styles.isPlaying : ""}`}
+      layout
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+    >
+      <div className={styles.albumArt} style={{ backgroundColor: `hsl(var(--mood-color-hsl)/0.2)`}}>
+        {albumArt ? <img src={albumArt} alt={title} /> : <MusicIcon />}
       </div>
-
-      {/* Single global audio element */}
-      <audio ref={audioRef} style={{ display: "none" }} />
-    </div>
+      <div className={styles.meta}>
+        <div className={styles.title}>{title}</div>
+        <div className={styles.artist}>{artist}</div>
+      </div>
+      <motion.button
+        className={styles.playButton}
+        onClick={onToggle}
+        aria-label={isPlaying ? "Pause" : "Play"}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        {isPlaying ? <PauseIcon /> : <PlayIcon />}
+      </motion.button>
+      {isPlaying && (
+        <div className={styles.audioVisualizer}>
+          <span /> <span /> <span /> <span />
+        </div>
+      )}
+    </motion.div>
   );
 };
 
-export default MoodSongs;
+export default function MoodSongs({ songs = [] }) {
+  const audioRef = useRef(null);
+  const [activeSongIndex, setActiveSongIndex] = useState(null);
+
+  // When song list changes, stop playback
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    setActiveSongIndex(null);
+  }, [songs]);
+
+  const togglePlayback = (index, song) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const songUrl = song.audio || song.url;
+
+    if (activeSongIndex === index) {
+      audio.pause();
+      setActiveSongIndex(null);
+    } else {
+      if (audio.src !== songUrl) {
+        audio.src = songUrl;
+      }
+      audio.play().catch(e => console.error("Audio playback error:", e));
+      setActiveSongIndex(index);
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.07,
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      className={styles.songsContainer}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      key={songs.length > 0 ? songs[0].title : 'empty'} // Re-trigger animation on new list
+    >
+      <AnimatePresence>
+        {songs.length > 0 ? (
+          songs.map((song, i) => (
+            <SongCard
+              key={`${song.title}-${i}`}
+              song={song}
+              isPlaying={activeSongIndex === i}
+              onToggle={() => togglePlayback(i, song)}
+            />
+          ))
+        ) : (
+          <motion.div
+            className={styles.emptyState}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <p>Detect your mood to get personalized song recommendations.</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <audio
+        ref={audioRef}
+        onEnded={() => setActiveSongIndex(null)}
+        style={{ display: "none" }}
+      />
+    </motion.div>
+  );
+}
