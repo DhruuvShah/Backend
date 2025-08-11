@@ -1,17 +1,71 @@
 .mood-songs {
   width: 100%;
-  padding: 4rem;
-  padding-top: 0;
-  color: aliceblue;
+  color: var(--text);
 }
 
 .mood-songs h2 {
-  margin-bottom: 1rem;
+  margin: 6px 6px 14px 6px;
+  font-size: 18px;
+  letter-spacing: -0.2px;
 }
 
-.mood-songs .song {
+.songs-list {
+  display: grid;
+  gap: 8px;
+}
+
+.song-row {
   display: flex;
-  width: 100%;
+  align-items: center;
   justify-content: space-between;
-  margin: 0.5rem 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), transparent),
+    color-mix(in oklab, var(--surface) 94%, transparent);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow);
+}
+
+.meta {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.title {
+  font-weight: 600;
+  letter-spacing: 0.1px;
+}
+.artist {
+  font-size: 12px;
+  color: var(--muted);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 60vw;
+}
+
+.pill {
+  border: 1px solid var(--border);
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+}
+.pill-active {
+  background: color-mix(in oklab, var(--accent) 85%, #000);
+  color: white;
+  border: none;
+  box-shadow: 0 6px 14px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+.empty {
+  padding: 22px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: 14px;
 }
