@@ -4,7 +4,10 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+const frontendURL = "https://your-frontend-name.vercel.app";
+app.use(cors({
+  origin: [frontendURL, "http://localhost:5173"]
+}));
 
 app.use('/', songRoutes);
 
