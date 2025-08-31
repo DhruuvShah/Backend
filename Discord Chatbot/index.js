@@ -1,6 +1,6 @@
 require("dotenv").config();
-const { Client, GatewayIntentBits, AttachmentBuilder } = require("discord.js");
-const { GoogleGenAI, Mode } = require("@google/genai");
+const { Client, GatewayIntentBits } = require("discord.js");
+const { GoogleGenAI } = require("@google/genai");
 
 const client = new Client({
   intents: [
@@ -32,9 +32,7 @@ client.on("messageCreate", async (message) => {
   if (isBot) return;
 
   const content = await generateContent(message.content);
-  if (content) {
-    message.reply(content);
-  }
+  message.reply(content);
 });
 
-client.login(process.env.DISCORD_BOT_TOKEN);
+client.login(process.env.DISCORD_TOKEN);
