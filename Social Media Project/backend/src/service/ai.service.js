@@ -23,9 +23,6 @@ async function generateCaption(base64ImageFile) {
       You generate single line caption for image.
       Your caption should be short and concise.
       You use hashtags and emojis in caption.
-      Generate caption in tapori language.
-      Create aesthetic caption.
-      The Caption should be in dark humor.
       `
     },
   });
