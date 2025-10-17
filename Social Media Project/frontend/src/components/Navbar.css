@@ -1,73 +1,68 @@
-.navbar {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0.75rem 0;
+.navbar-container {
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem; /* Reduced padding for a sleeker look */
 }
 
 .nav-logo {
-    font-size: 1.75rem;
-    font-weight: bold;
-    color: #4f46e5;
-    text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
 }
 
 .nav-menu {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .nav-user-info, .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .nav-greeting {
-    font-weight: 600;
+  font-weight: 500;
+  color: #ccc;
 }
 
-.nav-link {
-    text-decoration: none;
-    color: #4b5563;
-    transition: color 0.2s;
+.nav-button {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.nav-link:hover {
-    color: #4f46e5;
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
-.nav-logout-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.375rem;
-    background-color: #ef4444;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.nav-button.primary {
+  background: #00aaff;
+  border-color: transparent;
+}
+.nav-button.primary:hover {
+  background: #0077ff;
 }
 
-.nav-logout-btn:hover {
-    background-color: #dc2626;
+.nav-button.logout {
+  background: #ff4d4d;
+  border-color: transparent;
 }
-
-.nav-register-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    background-color: #4f46e5;
-    color: white;
-    text-decoration: none;
-    transition: background-color 0.2s;
-}
-
-.nav-register-btn:hover {
-    background-color: #4338ca;
+.nav-button.logout:hover {
+    background: #cc0000;
 }
