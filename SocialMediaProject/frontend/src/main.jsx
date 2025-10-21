@@ -5,9 +5,12 @@ import "./App.css"; // Global styles
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { registerSW } from "virtual:pwa-register";
 
-registerSW()
+import axios from 'axios';
+
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+axios.defaults.withCredentials = true;
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
