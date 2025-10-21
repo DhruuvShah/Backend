@@ -6,12 +6,5 @@ export default defineConfig({
   plugins: [
     react(),
   ],
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://localhost:3000", // Your backend server URL
-        changeOrigin: true,
-      },
-    },
-  },
+  // The 'server.proxy' section is removed as it's not needed for production.
 });

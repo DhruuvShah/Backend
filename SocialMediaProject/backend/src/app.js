@@ -2,14 +2,12 @@ const express = require("express");
 const authRoutes = require("./routes/auth.routes");
 const postRoutes = require("./routes/post.routes");
 const cookieParser = require("cookie-parser");
-const path = require("path");
 // const cors = require("cors");
 require("./models/user.model"); 
 require("./models/post.model"); 
 
 const app = express();
 
-// CORS configuration
 // app.use(
 //   cors({
 //     // origin: "http://localhost:5173", // Your frontend URL
@@ -21,11 +19,11 @@ const app = express();
 
 // Middleware
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "../public")));
+// app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.json());
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../public/index.html"));
+// });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
