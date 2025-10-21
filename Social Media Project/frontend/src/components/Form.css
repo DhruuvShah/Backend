@@ -1,24 +1,32 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .form-page-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 5rem;
+  min-height: 100vh;
+  padding: 2rem 1rem;
 }
 
 .form-glass-card {
   width: 100%;
   max-width: 450px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .form-glass-card h2 {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 600;
-  margin: 0 0 2rem 0;
+  margin: 0 0 1.5rem 0;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   text-align: left;
 }
 
@@ -41,7 +49,7 @@
 
 .form-input:focus {
   outline: none;
-  border-color: #1DB954;
+  border-color: #1db954;
 }
 
 .form-button {
@@ -50,7 +58,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: #000;
-  background: #1DB954;
+  background: #1db954;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -68,4 +76,20 @@
   padding: 0.8rem;
   border-radius: 8px;
   margin-bottom: 1.5rem;
+}
+
+@media (min-width: 480px) {
+  .form-page-container {
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+
+  .form-glass-card h2 {
+    font-size: 2rem;
+    margin: 0 0 2rem 0;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
 }
