@@ -4,15 +4,15 @@ const postRoutes = require("./routes/post.routes");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const cors = require("cors");
-require("./models/user.model"); // Ensure User model is registered
-require("./models/post.model"); // Ensure Post model is registered
+require("./models/user.model"); 
+require("./models/post.model"); 
 
 const app = express();
 
 // CORS configuration
 app.use(
   cors({
-    origin: "http://localhost:5173", // Your frontend URL
+    // origin: "http://localhost:5173", // Your frontend URL
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
