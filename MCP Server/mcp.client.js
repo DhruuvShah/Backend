@@ -37,14 +37,25 @@ client.listTools().then(async (response) => {
   });
 
   const aiResponse = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
-    contents: "Add 2 and 3",
+    model: "gemini-3-flash-preview",
+    contents: "Add 35 and 96",
     config: {
-      tools: [{
+      tools: [
+        {
           functionDeclarations: tools,
-        }],
+        },
+      ],
     },
   });
-  console.log("AI Response",aiResponse);
-});
 
+  console.log("AI Response", aiResponse.functionCalls);
+
+  aiResponse.functionCalls.forEach(async (call) => {
+    const toolResponse = await client.callTool({
+      name: call.name,
+      arguments: call.args,
+    });
+    console.log("Tool Response", toolResponse);
+  });
+});
+ 
