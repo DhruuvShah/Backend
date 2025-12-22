@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import PaymentButton from "./PaymentButton";
 
 function App() {
   const [products, setProducts] = useState(null);
@@ -66,7 +67,7 @@ function App() {
                 <div className="details-section">
                   <h2 className="product-title">{product.title}</h2>
                   <p className="product-description">{product.description}</p>
-            
+
                   <div className="bottom-section">
                     <div className="price-display">
                       <span className="currency-symbol">₹</span>
@@ -74,13 +75,7 @@ function App() {
                         {(product.price.amount / 100).toLocaleString("en-IN")}
                       </span>
                     </div>
-
-                    <button
-                      className="buy-now-button"
-                      onClick={() => handleBuyNow(product)}
-                    >
-                      Buy Now
-                    </button>
+                    <PaymentButton />
                   </div>
                 </div>
               </div>
